@@ -1,0 +1,28 @@
+<!--index.wxml-->
+<view class='page page-index'>
+  <view class='page-index-top'>
+    <image src='../../static/img/bg01.png'></image>
+    <view class='title' style='top:{{navH}}px'>
+      <image src="../../static/img/fanhui.png"></image>
+      <text>航班查询</text>
+    </view>
+    <view class='tab' style='top:{{navH+48}}px'>
+      <button class='{{ active == true ? "active" : ""}}' bindtap='clickTab1' >国内航班</button>
+      <button class='{{ active != true ? "active" : ""}}'  bindtap='clickTab2' >国际航班</button>
+    </view>
+    <view class='address' style='top:{{navH+108}}px'>
+      <view class='address1'>
+        <text>重庆</text>
+        <text>ChongQing</text>
+      </view>
+      <image src='../../static/img/bg02.png' class='img1'></image>
+      <image src='../../static/img/feiji.png'  class='change'></image>
+      <image src='../../static/img/bg02.png'  class='img2'></image>
+      <view class='address2'>
+        <text>贵阳</text>
+        <text>GuiYang</text>
+      </view>
+    </view>
+  </view>
+  
+</view>

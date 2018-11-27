@@ -1,0 +1,9 @@
+{
+  "pages": [
+    "pages/index/index",
+    "index.wxml"
+  ],
+  "window": {
+    "navigationStyle":"custom"
+  }
+}
