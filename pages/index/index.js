@@ -47,7 +47,7 @@ Page({
     console.log(e)
     if(e.scrollTop>5){
       this.setData({
-        bgColor:"#000"
+        bgColor:"rgba(0,0,0,1)"
       })
     }else{
       this.setData({

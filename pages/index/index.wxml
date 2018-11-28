@@ -2,7 +2,7 @@
 <view class='page page-index'>
   <view class='page-index-top'>
     <image src='../../static/img/bg01.png'></image>
-    <view class='title' style='top:{{navH}}px;background-color:{{bgColor}}'>
+    <view class='title' style='padding-top:{{navH}}px;height:{{navH+16}}px;background-color:{{bgColor}}'>
       <image src="../../static/img/fanhui.png"></image>
       <text>航班查询</text>
     </view>
