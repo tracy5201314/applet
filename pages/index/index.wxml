@@ -2,7 +2,7 @@
 <view class='page page-index'>
   <view class='page-index-top'>
     <image src='../../static/img/bg01.png'></image>
-    <view class='title' style='top:{{navH}}px'>
+    <view class='title' style='top:{{navH}}px;background-color:{{bgColor}}'>
       <image src="../../static/img/fanhui.png"></image>
       <text>航班查询</text>
     </view>
@@ -24,5 +24,77 @@
       </view>
     </view>
   </view>
-  
+  <view class='page-index-mid'>
+    <view class='search-form'>
+      <view class='item'>
+        <view class='title'>
+          <image src='../../static/img/rili.png' style='width:14px;height:15px'></image>
+          <text>去程日期</text>
+          <text class='text'>Departure</text>
+        </view>
+        <view class="section">
+          <picker mode="date" value="{{date}}" start="{{startDate}}" end="" bindchange="bindDateChange" data-time="0" >
+            <view class="picker">
+              <text>{{date}}</text>
+              <image src='../../static/img/confirm.png' style='float:right;margin-top:7.5px;width:12px;height:12px'></image>
+            </view>
+          </picker>
+        </view>
+      </view>
+      <view class='item'>
+        <view class='title'>
+          <image src='../../static/img/rili.png' style='width:14px;height:15px'></image>
+          <text>返程日期</text>
+          <text class='text'>Return</text>
+        </view>
+        <view class="section">
+          <view wx:if="{{returnDateStatus}}" class='status1'>
+            <view><text>暂无返程计划，去添加</text></view>
+            <picker mode="date" value="{{date1}}" start="{{startDate}}" end="" bindchange="bindDateChange" data-time="1">
+              <view class="picker">添加返程</view>
+            </picker>
+          </view>          
+          <view  class='status2' wx:else >
+            <picker mode="date" value="{{date1}}" start="{{startDate}}" end="" bindchange="bindDateChange" data-time="1">
+              <view class="picker">{{date1}}</view>
+            </picker>
+            <button bindtap='changeReturnStatus'>取消</button>
+          </view>
+        </view>
+      </view>
+      <view class='airplane-passenger item'>
+        <view class='title'>
+          <image src='../../static/img/person.png' style='width:15px;height:15px'></image>
+          <text>乘机人类型</text>
+          <text class='text'>Passenger Type</text>
+          <button>查看说明>></button>
+        </view>
+        <view class='personnel'>
+          <view class='personnel-item'>
+            <image src='../../static/img/adult.png'></image>
+            <view>成人：1000</view>
+          </view>
+          <view class='personnel-item'>
+            <image src='../../static/img/children.png'></image>
+            <view>儿童：0</view>
+          </view>
+          <view class='personnel-item'>
+            <image src='../../static/img/baby.png'></image>
+            <view>婴儿：0</view>
+          </view>
+        </view>
+      </view>
+      <button class='btn-search'>立即搜索</button>
+    </view>
+    <view class='search-history'>
+      <view class='title'>
+        <text>历史记录</text>
+      </view>
+      <view class='history-list'>
+        <text>重庆—贵阳</text>
+        <text>重庆—上海</text>
+        <text>上海—北京</text>
+      </view>
+    </view>
+  </view>
 </view>

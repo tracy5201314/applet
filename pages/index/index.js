@@ -1,6 +1,36 @@
 //index.js
 //获取应用实例
 const app = getApp()
+const date = new Date();
+// console.log(startDate.getDate())
+const startDate = date.getFullYear() + "-" + (date.getMonth()+1) + '-' + date.getDate()
+const week = (i) => {
+  switch (i) {
+    case 0:
+      return "周天"
+      break;
+    case 1:
+      return "周一"
+      break;
+    case 2:
+      return "周二"
+      break;
+    case 3:
+      return "周三"
+      break;
+    case 4:
+      return "周四"
+      break;
+    case 5:
+      return "周五"
+      break;
+    case 6:
+      return "周六"
+      break;
+  }
+}
+
+console.log(startDate)
 
 Page({
   data: {
@@ -10,18 +40,32 @@ Page({
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     srcArr:[1,2,3],
     navH:null,
-    active:true
+    active:true,
+    returnDateStatus:true
   },
-  //事件处理函数
-  bindViewTap: function() {
-    wx.navigateTo({
-      url: '../logs/logs'
-    })
+  onPageScroll: function (e) {
+    console.log(e)
+    if(e.scrollTop>5){
+      this.setData({
+        bgColor:"#000"
+      })
+    }else{
+      this.setData({
+        bgColor:"transparent"
+      })
+    }
   },
   onLoad: function () {
+    //设置自定义导航栏距离顶部的距离
     this.setData({
       navH: app.globalData.navHeight
     })
+    //设置默认日期为当前时间
+    this.setData({
+      startDate:startDate,
+      date: (date.getMonth() + 1) + '月' + date.getDate() + "日" + "   " + week(date.getDay())
+    })
+    //获取用户的信息
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,
@@ -49,6 +93,7 @@ Page({
       })
     }
   },
+  // 获取用户信息并设置
   getUserInfo: function(e) {
     console.log(e)
     app.globalData.userInfo = e.detail.userInfo
@@ -69,6 +114,31 @@ Page({
   clickTab2: function (e) {
     this.setData({
       active:false
+    })
+  },
+  //日期选择
+  bindDateChange: function (e) {
+    console.log(e)
+    if(e.currentTarget.dataset.time==0){
+      let selectDate = new Date(e.detail.value)
+      let dateValue = (selectDate.getMonth() + 1) + '月' + selectDate.getDate() + "日" + "   " + week(selectDate.getDay())
+      this.setData({
+        date:dateValue
+      })
+    }else{
+      let selectDate = new Date(e.detail.value)
+      let dateValue = (selectDate.getMonth() + 1) + '月' + selectDate.getDate() + "日" + "   " + week(selectDate.getDay())
+      this.setData({
+        returnDateStatus:false,
+        date1: dateValue
+      })
+    }
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+  },
+  //返程状态的改变
+  changeReturnStatus:function(){
+    this.setData({
+      returnDateStatus:true
     })
   }
 })
