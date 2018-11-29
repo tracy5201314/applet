@@ -4,6 +4,9 @@
     "index.wxml"
   ],
   "window": {
-    "navigationStyle":"custom"
-  }
+    "navigationStyle":"custom",
+    "pageOrientation":"auto",
+    "resizable":true
+  },
+  "debug":false
 }

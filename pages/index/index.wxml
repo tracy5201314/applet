@@ -1,15 +1,21 @@
 <!--index.wxml-->
 <view class='page page-index'>
+  <!-- 顶部 -->
   <view class='page-index-top'>
     <image src='../../static/img/bg01.png'></image>
+    <!-- 顶部导航 -->
     <view class='title' style='padding-top:{{navH}}px;height:{{navH+16}}px;background-color:{{bgColor}}'>
       <image src="../../static/img/fanhui.png"></image>
       <text>航班查询</text>
     </view>
+    <!-- 顶部导航 -->
+    <!-- 切换航班查询 -->
     <view class='tab' style='top:{{navH+48}}px'>
       <button class='{{ active == true ? "active" : ""}}' bindtap='clickTab1' >国内航班</button>
       <button class='{{ active != true ? "active" : ""}}'  bindtap='clickTab2' >国际航班</button>
     </view>
+    <!-- 切换航班查询 -->
+    <!-- 航班地址 -->
     <view class='address' style='top:{{navH+108}}px'>
       <view class='address1'>
         <text>重庆</text>
@@ -23,9 +29,14 @@
         <text>GuiYang</text>
       </view>
     </view>
+    <!-- 航班地址 -->
   </view>
+  <!-- 顶部 -->
+  <!-- mid -->
   <view class='page-index-mid'>
+    <!-- 表单 -->
     <view class='search-form'>
+      <!-- 去程日期 -->
       <view class='item'>
         <view class='title'>
           <image src='../../static/img/rili.png' style='width:14px;height:15px'></image>
@@ -41,6 +52,8 @@
           </picker>
         </view>
       </view>
+      <!-- 去程日期 -->
+      <!-- 返程日期 -->
       <view class='item'>
         <view class='title'>
           <image src='../../static/img/rili.png' style='width:14px;height:15px'></image>
@@ -62,30 +75,35 @@
           </view>
         </view>
       </view>
+      <!-- 返程日期 -->
+      <!-- 乘机人类型 -->
       <view class='airplane-passenger item'>
         <view class='title'>
           <image src='../../static/img/person.png' style='width:15px;height:15px'></image>
           <text>乘机人类型</text>
           <text class='text'>Passenger Type</text>
-          <button>查看说明>></button>
+          <button bindtap='openPopupTip'>查看说明>></button>
         </view>
         <view class='personnel'>
-          <view class='personnel-item'>
+          <view class='personnel-item' bindtap='openAddPassengersPopup'>
             <image src='../../static/img/adult.png'></image>
-            <view>成人：1000</view>
+            <view>成人：{{adultNum}}</view>
           </view>
-          <view class='personnel-item'>
+          <view class='personnel-item' bindtap='openAddPassengersPopup'>
             <image src='../../static/img/children.png'></image>
-            <view>儿童：0</view>
+            <view>儿童：{{childrenNum}}</view>
           </view>
-          <view class='personnel-item'>
+          <view class='personnel-item' bindtap='openAddPassengersPopup'>
             <image src='../../static/img/baby.png'></image>
-            <view>婴儿：0</view>
+            <view>婴儿：{{babyNum}}</view>
           </view>
         </view>
       </view>
+      <!-- 乘机人类型 -->
       <button class='btn-search'>立即搜索</button>
     </view>
+    <!-- 表单 -->
+    <!-- 搜索历史 -->
     <view class='search-history'>
       <view class='title'>
         <text>历史记录</text>
@@ -96,5 +114,83 @@
         <text>上海—北京</text>
       </view>
     </view>
+    <!-- 搜索历史 -->
+  </view>
+  <!-- mid -->
+</view>
+
+<!-- 乘机人类型说明弹窗 -->
+<view class='popup-tip' wx:if="{{popupTipStatus}}" capture-catch:touchmove="preventTouchMove">
+  <view class='popup-tip-content'>  
+    <view class='title'>婴儿、儿童预订说明</view>
+    <view class='text'>
+      <view>婴儿票预订说明</view>
+      <text>1.婴儿：14天≤婴儿年龄＜2周岁；\n 2.婴儿需要年满18周岁的成人携带登机，1名年满10周岁的成人智能携带1名婴儿出行</text>    
+      <view>儿童票预订说明</view>
+      <text>1.儿童：2周岁≤儿童年龄＜12周岁；</text>
+    </view>
+    <view class='btn'>
+      <button bindtap='closePopupTip'>知道了</button>
+    </view>
   </view>
 </view>
+<!-- 乘机人类型说明弹窗 -->
+
+<!-- 添加乘客弹窗 -->
+<view class='add-passengers-popup' wx:if="{{addPassengersStatus}}" capture-catch:touchmove="preventTouchMove">
+  <view class='add-passengers-popup-content'>
+    <!-- 添加乘客头部 -->
+    <view class='title'>
+      <view>
+        <image src='../../static/img/person.png'></image>
+        <text>选择乘机人类型</text>
+      </view>
+      <image src='../../static/img/guanbi.png' bindtap='closeAddPassengersPopup'></image>
+    </view>
+    <!-- 添加乘客头部 -->
+    <!-- 添加乘客列表 -->
+    <view class='list'>
+      <!-- list-item -->
+      <view class='list-item'>
+        <view class='info'>
+          <image src='../../static/img/adult.png'></image>
+          <view class='text'>成人<text>(≥12岁)</text></view>
+        </view>
+        <view class='number'>
+          <button bindtap='minusNum' data-num='0'>-</button>
+          <text>{{adultNum}}</text>
+          <button bindtap='addNum' data-num='0'>+</button>
+        </view>
+      </view>
+      <!-- list-item -->
+      <!-- list-item -->
+      <view class='list-item'>
+        <view class='info'>
+          <image src='../../static/img/children.png'></image>
+          <view class='text'>儿童<text>(2岁≤儿童＜12岁)</text></view>
+        </view>
+        <view class='number'>
+          <button data-num='1' bindtap='minusNum'>-</button>
+          <text>{{childrenNum}}</text>
+          <button data-num='1' bindtap='addNum'>+</button>
+        </view>
+      </view>
+      <!-- list-item -->
+      <!-- list-item -->
+      <view class='list-item'>
+        <view class='info'>
+          <image src='../../static/img/baby.png'></image>
+          <view class='text'>婴儿<text>(14天≤婴儿＜2岁)</text></view>
+        </view>
+        <view class='number'>
+          <button data-num='2' bindtap='minusNum'>-</button>
+          <text>{{babyNum}}</text>
+          <button data-num='2' bindtap='addNum'>+</button>
+        </view>
+      </view>
+      <!-- list-item -->
+    </view>
+    <!-- 添加乘客列表 -->
+  </view>
+</view>
+<!-- 添加乘客弹窗 -->
